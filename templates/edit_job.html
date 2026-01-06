@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Job Application - Application Tracking System</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <div class="header-brand">
+            <h1 class="brand-name">Job Tracker</h1>
+            <p class="brand-tagline">Application Tracking & ATS Analysis</p>
+        </div>
+        <nav class="header-nav">
+            <a href="/" class="btn btn-nav">Home</a>
+            <a href="/add-job" class="btn btn-nav">Add Job</a>
+            <a href="/dashboard" class="btn btn-nav">Dashboard</a>
+            <a href="/upload-resume" class="btn btn-nav">Resume Checker</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="content-wrapper">
+            
+            <!-- Page Heading -->
+            <h1 class="page-title">Edit Job Application</h1>
+            <p class="page-subtitle">
+                Update your application details, dates, status, and notes.
+            </p>
+
+            <!-- Error Messages -->
+            {% if errors %}
+                <div class="error-alerts">
+                    {% for error in errors %}
+                        <div class="error-alert">
+                            <strong>Error:</strong> {{ error }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Form Card -->
+            <div class="form-card">
+                <form method="POST">
+                    <input type="hidden" name="job_id" value="{{ job['id'] }}">
+                    
+                    <!-- Company Name Input -->
+                    <div class="form-group">
+                        <label for="company">Company Name <span class="required">*</span></label>
+                        <input 
+                            type="text" 
+                            id="company"
+                            name="company" 
+                            value="{{ job['company'] }}"
+                            placeholder="e.g., Google, Microsoft, Amazon"
+                            required
+                            autocomplete="off"
+                        >
+                        <p class="form-hint">The name of the company hiring for this position</p>
+                    </div>
+
+                    <!-- Job Role Input -->
+                    <div class="form-group">
+                        <label for="role">Job Role / Position <span class="required">*</span></label>
+                        <input 
+                            type="text" 
+                            id="role"
+                            name="role" 
+                            value="{{ job['role'] }}"
+                            placeholder="e.g., Software Engineer, Product Manager, Data Analyst"
+                            required
+                            autocomplete="off"
+                        >
+                        <p class="form-hint">The job title you are applying for</p>
+                    </div>
+
+                    <!-- Job Description Textarea -->
+                    <div class="form-group">
+                        <label for="job_description">Job Description</label>
+                        <textarea 
+                            id="job_description"
+                            name="job_description" 
+                            placeholder="Paste the complete job posting here. This will be analyzed against your resume for keyword matching and ATS compatibility."
+                            rows="8"
+                        >{{ job['job_description'] if job['job_description'] else '' }}</textarea>
+                        <p class="form-hint">Copy and paste the entire job description. Update this to re-analyze against your resume.</p>
+                    </div>
+
+                    <!-- Status Dropdown -->
+                    <div class="form-group">
+                        <label for="status">Application Status <span class="required">*</span></label>
+                        <select id="status" name="status" required>
+                            <option value="Applied" {% if job['status'] == 'Applied' %}selected{% endif %}>Applied</option>
+                            <option value="Interview" {% if job['status'] == 'Interview' %}selected{% endif %}>Interview</option>
+                            <option value="Rejected" {% if job['status'] == 'Rejected' %}selected{% endif %}>Rejected</option>
+                        </select>
+                        <p class="form-hint">Select your current application status</p>
+                    </div>
+
+                    <!-- Date Applied Input -->
+                    <div class="form-group">
+                        <label for="date_applied">Date Applied</label>
+                        <input 
+                            type="date" 
+                            id="date_applied"
+                            name="date_applied" 
+                            value="{{ job['date_applied'] if job['date_applied'] else '' }}"
+                            autocomplete="off"
+                        >
+                        <p class="form-hint">When did you submit your application?</p>
+                    </div>
+
+                    <!-- Interview Date Input -->
+                    <div class="form-group">
+                        <label for="interview_date">Interview Date (if scheduled)</label>
+                        <input 
+                            type="date" 
+                            id="interview_date"
+                            name="interview_date" 
+                            value="{{ job['interview_date'] if job['interview_date'] else '' }}"
+                            autocomplete="off"
+                        >
+                        <p class="form-hint">Scheduled interview date, if applicable</p>
+                    </div>
+
+                    <!-- Notes Textarea -->
+                    <div class="form-group">
+                        <label for="notes">Notes & Comments</label>
+                        <textarea 
+                            id="notes"
+                            name="notes" 
+                            placeholder="Add any notes about this application (salary range, contact person, special requirements, etc.)"
+                            rows="4"
+                        >{{ job['notes'] if job['notes'] else '' }}</textarea>
+                        <p class="form-hint">Add any relevant notes about this application</p>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-action btn-action-primary">
+                            Save Changes
+                        </button>
+                        <a href="/dashboard" class="btn btn-action btn-action-secondary">
+                            Back to Dashboard
+                        </a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Info Section -->
+            <section class="info-section">
+                <h2 class="section-title">Tips for Updating Your Application</h2>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-step">1</div>
+                        <h3>Track Dates</h3>
+                        <p>Keep track of when you applied and any interviews scheduled to stay organized.</p>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="info-step">2</div>
+                        <h3>Add Notes</h3>
+                        <p>Record important details like contact names, salary expectations, or special requirements.</p>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="info-step">3</div>
+                        <h3>Update Status</h3>
+                        <p>Keep your application status current as you progress through the interview process.</p>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="info-step">4</div>
+                        <h3>Re-analyze Job</h3>
+                        <p>If you update the job description, upload your resume again to get a new ATS score.</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+</body>
+</html>

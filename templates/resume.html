@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume ATS Analyzer - Application Tracking System</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <div class="header-brand">
+            <h1 class="brand-name">Job Tracker</h1>
+            <p class="brand-tagline">Application Tracking & ATS Analysis</p>
+        </div>
+        <nav class="header-nav">
+            <a href="/" class="btn btn-nav">Home</a>
+            <a href="/add-job" class="btn btn-nav">Add Job</a>
+            <a href="/dashboard" class="btn btn-nav">Dashboard</a>
+            <a href="/upload-resume" class="btn btn-nav-active">Resume Checker</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="content-wrapper">
+            
+            <!-- Page Heading -->
+            <h1 class="page-title">Resume ATS Analyzer</h1>
+            <p class="page-subtitle">
+                Upload your resume and select a job to analyze how well your resume matches that specific job description.
+            </p>
+
+            <!-- Error Messages -->
+            {% if errors %}
+                <div class="error-alerts">
+                    {% for error in errors %}
+                        <div class="error-alert">
+                            <strong>⚠ Error:</strong> {{ error }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Upload Form Section -->
+            <section class="form-card">
+                <h2 class="form-title">Upload & Analyze Your Resume</h2>
+                <form method="POST" enctype="multipart/form-data">
+                    
+                    <!-- Job Selection -->
+                    <div class="form-group">
+                        <label for="job_id">Select a Job to Analyze <span class="required">*</span></label>
+                        <select id="job_id" name="job_id" required>
+                            <option value="">-- Select a Job --</option>
+                            {% for job in all_jobs %}
+                                <option value="{{ job['id'] }}">{{ job['company'] }} - {{ job['role'] }}</option>
+                            {% endfor %}
+                        </select>
+                        <p class="form-hint">Choose a job you've added to analyze your resume against. Not seeing jobs? <a href="/add-job">Add a job first</a></p>
+                    </div>
+
+                    <!-- File Input -->
+                    <div class="form-group">
+                        <label for="resume">Resume File (PDF) <span class="required">*</span></label>
+                        <input 
+                            type="file" 
+                            id="resume"
+                            name="resume" 
+                            accept=".pdf"
+                            required
+                        >
+                        <p class="form-hint">Upload your resume in PDF format (maximum 10MB)</p>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-action btn-action-primary">
+                            Analyze Resume
+                        </button>
+                        <a href="/dashboard" class="btn btn-action btn-action-secondary">
+                            Back to Dashboard
+                        </a>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Analysis Results Section -->
+            {% if matched_keywords or missing_keywords or match_percent > 0 %}
+
+                <!-- Job Information Card -->
+                <div class="result-header">
+                    <h2 class="section-title">Analysis Results</h2>
+                    <div class="job-info-grid">
+                        <div class="job-info-item">
+                            <p class="job-info-label">Company</p>
+                            <p class="job-info-value">{{ selected_job['company'] }}</p>
+                        </div>
+                        <div class="job-info-item">
+                            <p class="job-info-label">Position</p>
+                            <p class="job-info-value">{{ selected_job['role'] }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ATS Score Section -->
+                <section class="ats-result-section">
+                    <h2 class="section-title">ATS Compatibility Score</h2>
+                    
+                    <div class="ats-score-container">
+                        <div class="ats-score-display {% if match_percent >= 80 %}excellent{% elif match_percent >= 60 %}good{% else %}poor{% endif %}">
+                            <div class="ats-score-value">{{ match_percent }}%</div>
+                            <div class="ats-score-label">Match Score</div>
+                        </div>
+                    </div>
+
+                    <!-- Score Interpretation -->
+                    <div class="score-interpretation {% if match_percent >= 80 %}excellent{% elif match_percent >= 60 %}good{% else %}poor{% endif %}">
+                        {% if match_percent >= 80 %}
+                            <h3>✓ Excellent Match</h3>
+                            <p>Your resume covers most of the key requirements. You are a strong candidate for this role and should apply with confidence.</p>
+                        {% elif match_percent >= 60 %}
+                            <h3>⚠ Good Match</h3>
+                            <p>Your resume covers many requirements. Consider adding the missing keywords below to improve your chances and ATS score.</p>
+                        {% else %}
+                            <h3>✗ Needs Improvement</h3>
+                            <p>Your resume is missing several key requirements. Review the missing keywords and update your resume before applying.</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Improvement Suggestions Section -->
+                    {% if improvement_suggestions %}
+                    <div class="improvement-suggestions">
+                        <h3>How to Improve Your Match Score</h3>
+                        <p class="suggestions-intro">{{ improvement_suggestions['main_message'] }}</p>
+                        
+                        <div class="suggestions-grid">
+                            <div class="suggestions-card priority">
+                                <h4>Priority Actions</h4>
+                                <ol>
+                                    {% for action in improvement_suggestions['priority_actions'] %}
+                                        <li>{{ action }}</li>
+                                    {% endfor %}
+                                </ol>
+                            </div>
+                            
+                            <div class="suggestions-card quick-wins">
+                                <h4>Quick Wins</h4>
+                                <ul>
+                                    {% for win in improvement_suggestions['quick_wins'] %}
+                                        <li>{{ win }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </section>
+
+                <!-- Keywords Results Section -->
+                <section class="keywords-section">
+                    <div class="keywords-container">
+                        
+                        <!-- Matched Keywords -->
+                        <div class="keywords-card matched">
+                            <h3>Keywords Found in Your Resume</h3>
+                            {% if matched_keywords %}
+                                <div class="keywords-list">
+                                    {% for keyword in matched_keywords %}
+                                        <span class="keyword-badge matched">{{ keyword }}</span>
+                                    {% endfor %}
+                                </div>
+                                <p class="keywords-count">Found <strong>{{ matched_keywords|length }}</strong> matching keywords</p>
+                            {% else %}
+                                <p class="keywords-empty">No matching keywords found in your resume text.</p>
+                            {% endif %}
+                        </div>
+
+                        <!-- Missing Keywords -->
+                        <div class="keywords-card missing">
+                            <h3>Keywords Missing From Your Resume</h3>
+                            {% if missing_keywords %}
+                                <div class="keywords-list">
+                                    {% for keyword in missing_keywords %}
+                                        <span class="keyword-badge missing">{{ keyword }}</span>
+                                    {% endfor %}
+                                </div>
+                                <p class="keywords-count">Missing <strong>{{ missing_keywords|length }}</strong> keywords from job description</p>
+                                <div class="missing-keywords-tips">
+                                    <p><strong>How to improve:</strong></p>
+                                    <ul>
+                                        <li>Add relevant skills from this list to your resume</li>
+                                        <li>Update job descriptions with industry-specific terminology</li>
+                                        <li>Include technical keywords that match the job requirements</li>
+                                    </ul>
+                                </div>
+                            {% else %}
+                                <p class="keywords-perfect">Perfect! You have all the key keywords covered in your resume.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Extracted Text Section -->
+                <section class="extracted-text-section">
+                    <h2 class="section-title">Extracted Resume Text</h2>
+                    <p class="section-subtitle">This is the raw text extracted from your PDF for reference:</p>
+                    <textarea readonly class="extracted-text">{{ resume_text }}</textarea>
+                </section>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons" style="display: flex; gap: var(--spacing-md); flex-wrap: wrap; margin-top: var(--spacing-xl);">
+                    <a href="/export-results/{{ analyzed_job_id }}" class="btn btn-action btn-action-success">
+                        📋 Export Report
+                    </a>
+                    <a href="/upload-resume" class="btn btn-action btn-action-primary">
+                        Analyze Another Resume
+                    </a>
+                    <a href="/add-job" class="btn btn-action btn-action-secondary">
+                        Add Another Job
+                    </a>
+                    <a href="/dashboard" class="btn btn-action btn-action-tertiary">
+                        Back to Dashboard
+                    </a>
+                </div>
+
+            {% elif not error %}
+
+                <!-- Tips Section -->
+                <section class="tips-section">
+                    <h2 class="section-title">How to Improve Your ATS Score</h2>
+                    <div class="tips-grid">
+                        <div class="tip-card">
+                            <h3>Use Keywords</h3>
+                            <p>Include technical skills and keywords from the job description in your resume.</p>
+                        </div>
+                        <div class="tip-card">
+                            <h3>Clear Formatting</h3>
+                            <p>Avoid complex designs, columns, and graphics. Use simple, standard formatting.</p>
+                        </div>
+                        <div class="tip-card">
+                            <h3>Standard Sections</h3>
+                            <p>Use clear headers like "Skills", "Experience", and "Education".</p>
+                        </div>
+                        <div class="tip-card">
+                            <h3>Skills Section</h3>
+                            <p>Create a dedicated skills section listing your relevant technologies and abilities.</p>
+                        </div>
+                        <div class="tip-card">
+                            <h3>Common Fonts</h3>
+                            <p>Stick to standard fonts like Arial, Calibri, or Times New Roman.</p>
+                        </div>
+                        <div class="tip-card">
+                            <h3>PDF Format</h3>
+                            <p>Always save your resume as PDF to ensure formatting is preserved.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Getting Started Section -->
+                <section class="getting-started">
+                    <h2 class="section-title">Getting Started</h2>
+                    <div class="steps-container">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <h3>Add Jobs</h3>
+                            <p>Record job postings with their descriptions</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <h3>Prepare Resume</h3>
+                            <p>Save your resume in PDF format</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <h3>Upload & Analyze</h3>
+                            <p>Upload your resume and select a job</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <h3>Improve Resume</h3>
+                            <p>Add missing keywords and resubmit</p>
+                        </div>
+                    </div>
+                </section>
+
+            {% endif %}
+
+        </div>
+    </div>
+
+</body>
+</html>

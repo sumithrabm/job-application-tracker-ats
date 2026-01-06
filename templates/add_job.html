@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Job Application - Application Tracking System</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <div class="header-brand">
+            <h1 class="brand-name">Job Tracker</h1>
+            <p class="brand-tagline">Application Tracking & ATS Analysis</p>
+        </div>
+        <nav class="header-nav">
+            <a href="/" class="btn btn-nav">Home</a>
+            <a href="/add-job" class="btn btn-nav-active">Add Job</a>
+            <a href="/dashboard" class="btn btn-nav">Dashboard</a>
+            <a href="/upload-resume" class="btn btn-nav">Resume Checker</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="content-wrapper">
+            
+            <!-- Page Heading -->
+            <h1 class="page-title">Add New Job Application</h1>
+            <p class="page-subtitle">
+                Record a new job application. Enter company details, position, and job description for ATS analysis.
+            </p>
+
+            <!-- Error Messages -->
+            {% if errors %}
+                <div class="error-alerts">
+                    {% for error in errors %}
+                        <div class="error-alert">
+                            <strong>Error:</strong> {{ error }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Form Card -->
+            <div class="form-card">
+                <form method="POST">
+                    
+                    <!-- Company Name Input -->
+                    <div class="form-group">
+                        <label for="company">Company Name <span class="required">*</span></label>
+                        <input 
+                            type="text" 
+                            id="company"
+                            name="company" 
+                            placeholder="e.g., Google, Microsoft, Amazon"
+                            required
+                            autocomplete="off"
+                        >
+                        <p class="form-hint">The name of the company hiring for this position</p>
+                    </div>
+
+                    <!-- Job Role Input -->
+                    <div class="form-group">
+                        <label for="role">Job Role / Position <span class="required">*</span></label>
+                        <input 
+                            type="text" 
+                            id="role"
+                            name="role" 
+                            placeholder="e.g., Software Engineer, Product Manager, Data Analyst"
+                            required
+                            autocomplete="off"
+                        >
+                        <p class="form-hint">The job title you are applying for</p>
+                    </div>
+
+                    <!-- Job Description Textarea -->
+                    <div class="form-group">
+                        <label for="job_description">Job Description <span class="required">*</span></label>
+                        <textarea 
+                            id="job_description"
+                            name="job_description" 
+                            placeholder="Paste the complete job posting here. This will be analyzed against your resume for keyword matching and ATS compatibility."
+                            rows="8"
+                            required
+                        ></textarea>
+                        <p class="form-hint">Copy and paste the entire job description. This helps analyze how well your resume matches the position requirements.</p>
+                    </div>
+
+                    <!-- Status Dropdown -->
+                    <div class="form-group">
+                        <label for="status">Application Status <span class="required">*</span></label>
+                        <select id="status" name="status" required>
+                            <option value="Applied" selected>Applied</option>
+                            <option value="Interview">Interview</option>
+                            <option value="Rejected">Rejected</option>
+                        </select>
+                        <p class="form-hint">Select your current application status</p>
+                    </div>
+
+                    <!-- Date Applied Input -->
+                    <div class="form-group">
+                        <label for="date_applied">Date Applied</label>
+                        <input 
+                            type="date" 
+                            id="date_applied"
+                            name="date_applied" 
+                            autocomplete="off"
+                        >
+                        <p class="form-hint">When did you submit your application? (Optional)</p>
+                    </div>
+
+                    <!-- Interview Date Input -->
+                    <div class="form-group">
+                        <label for="interview_date">Interview Date (if scheduled)</label>
+                        <input 
+                            type="date" 
+                            id="interview_date"
+                            name="interview_date" 
+                            autocomplete="off"
+                        >
+                        <p class="form-hint">Scheduled interview date, if applicable (Optional)</p>
+                    </div>
+
+                    <!-- Notes Textarea -->
+                    <div class="form-group">
+                        <label for="notes">Notes & Comments</label>
+                        <textarea 
+                            id="notes"
+                            name="notes" 
+                            placeholder="Add any notes about this application (salary range, contact person, special requirements, etc.)"
+                            rows="4"
+                        ></textarea>
+                        <p class="form-hint">Add any relevant notes about this application (Optional)</p>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-action btn-action-primary">
+                            Save Application
+                        </button>
+                        <a href="/dashboard" class="btn btn-action btn-action-secondary">
+                            Back to Dashboard
+                        </a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Info Section -->
+            <section class="info-section">
+                <h2 class="section-title">How to Add a Job Application</h2>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-step">1</div>
+                        <h3>Enter Company Details</h3>
+                        <p>Provide the company name and specific job role or position title you're applying for.</p>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="info-step">2</div>
+                        <h3>Add Job Description</h3>
+                        <p>Paste the complete job posting. Include responsibilities, requirements, and skills listed in the job posting.</p>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="info-step">3</div>
+                        <h3>Set Application Status</h3>
+                        <p>Mark your current status: Applied, Interview, or Rejected. You can update this later.</p>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="info-step">4</div>
+                        <h3>Get ATS Analysis</h3>
+                        <p>Upload your resume on the Resume Checker page to see how well it matches this job's requirements.</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+</body>
+</html>

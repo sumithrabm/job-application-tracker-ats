@@ -1,0 +1,418 @@
+/* ============================================
+   GLASSMORPHISM CSS CHEAT SHEET
+   Copy & Paste Snippets for Common Tasks
+   ============================================ */
+
+/* ===== GLASS CARD BASIC ===== */
+.my-glass-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== GLASS CARD WITH HOVER ===== */
+.interactive-glass-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.interactive-glass-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ===== FROSTED GLASS INPUT ===== */
+.glass-input {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    color: #1f2937;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.glass-input::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.glass-input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.25);
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+/* ===== GRADIENT TEXT ===== */
+.gradient-text {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ===== GRADIENT BUTTON ===== */
+.gradient-button {
+    background: linear-gradient(135deg, #6366f1, #818cf8);
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.2);
+    transition: all 0.3s ease;
+}
+
+.gradient-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 36px rgba(99, 102, 241, 0.3);
+}
+
+/* ===== CIRCULAR GLASS BADGE ===== */
+.circular-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1),
+                inset 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+/* ===== COLORED BADGE ===== */
+.status-badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* Status variations */
+.status-badge.success {
+    background: rgba(16, 185, 129, 0.15);
+    border-color: rgba(16, 185, 129, 0.3);
+    color: #065f46;
+}
+
+.status-badge.warning {
+    background: rgba(245, 158, 11, 0.15);
+    border-color: rgba(245, 158, 11, 0.3);
+    color: #b45309;
+}
+
+.status-badge.danger {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #7f1d1d;
+}
+
+.status-badge.info {
+    background: rgba(14, 165, 233, 0.15);
+    border-color: rgba(14, 165, 233, 0.3);
+    color: #0c4a6e;
+}
+
+/* ===== GLASSMORPHISM TABLE ===== */
+.glass-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.glass-table thead {
+    background: rgba(99, 102, 241, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.glass-table th {
+    padding: 1.5rem;
+    text-align: left;
+    font-weight: 700;
+    color: #1f2937;
+    border-bottom: 2px solid rgba(99, 102, 241, 0.2);
+}
+
+.glass-table td {
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: #374151;
+}
+
+.glass-table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.glass-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+}
+
+/* ===== GLASS CONTAINER ===== */
+.glass-container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 3rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ===== GLASS HEADER/NAVBAR ===== */
+.glass-header {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 2rem;
+    z-index: 100;
+}
+
+/* ===== STAT CARD ===== */
+.stat-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 64px rgba(0, 0, 0, 0.12);
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 1rem 0;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+}
+
+/* ===== GLASS GRID ===== */
+.glass-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+/* ===== GLASS FORM GROUP ===== */
+.glass-form-group {
+    margin-bottom: 1.5rem;
+}
+
+.glass-form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #1f2937;
+    font-size: 0.875rem;
+}
+
+.glass-form-group input,
+.glass-form-group select,
+.glass-form-group textarea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    color: #1f2937;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.glass-form-group input::placeholder,
+.glass-form-group select::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.glass-form-group input:focus,
+.glass-form-group select:focus,
+.glass-form-group textarea:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.25);
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+/* ===== RESPONSIVE GRID ===== */
+@media (max-width: 768px) {
+    .glass-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .glass-header {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .glass-container {
+        padding: 1.5rem;
+    }
+}
+
+/* ===== UTILITY: TEXT SHADOW ===== */
+.glass-text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== UTILITY: MULTIPLE SHADOWS (DEPTH) ===== */
+.glass-depth-1 {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.glass-depth-2 {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.glass-depth-3 {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.glass-depth-4 {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+.glass-depth-5 {
+    box-shadow: 0 16px 64px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== ANIMATION: FLOAT ===== */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+.float {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* ===== ANIMATION: GLOW ===== */
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(99, 102, 241, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.8);
+    }
+}
+
+.glowing {
+    animation: glow 2s ease-in-out infinite;
+}
+
+/* ===== ANIMATION: PULSE ===== */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.pulse {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* ===== UTILITY: SMOOTH TRANSITION ===== */
+.smooth {
+    transition: all 0.3s ease;
+}
+
+.smooth-fast {
+    transition: all 0.15s ease;
+}
+
+.smooth-slow {
+    transition: all 0.5s ease;
+}
+
+/* ===== UTILITY: BACKDROP BLUR ONLY ===== */
+.blur-only {
+    background: transparent;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* ===== UTILITY: REMOVE ALL ANIMATIONS ===== */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ============================================
+   USAGE EXAMPLES
+   
+   <div class="glass-card">Card</div>
+   <button class="gradient-button">Click</button>
+   <input class="glass-input" type="text">
+   <div class="stat-card">
+       <div class="stat-label">Label</div>
+       <div class="stat-value">99</div>
+   </div>
+   
+   ============================================ */

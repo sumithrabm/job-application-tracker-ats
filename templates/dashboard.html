@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Application Tracking System</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <div class="header-brand">
+            <h1 class="brand-name">Job Tracker</h1>
+            <p class="brand-tagline">Application Tracking & ATS Analysis</p>
+        </div>
+        <nav class="header-nav">
+            <a href="/" class="btn btn-nav">Home</a>
+            <a href="/add-job" class="btn btn-nav">Add Job</a>
+            <a href="/dashboard" class="btn btn-nav-active">Dashboard</a>
+            <a href="/upload-resume" class="btn btn-nav">Resume Checker</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="content-wrapper">
+            
+            <!-- Page Heading -->
+            <h1 class="page-title">Application Dashboard</h1>
+            <p class="page-subtitle">Track all your job applications and view ATS compatibility scores</p>
+
+            <!-- Statistics Cards -->
+            {% if jobs %}
+                <div class="stat-grid">
+                    <!-- Total Applications Card -->
+                    <div class="stat-card">
+                        <div class="stat-label">Total Applications</div>
+                        <div class="stat-value">{{ jobs|length }}</div>
+                    </div>
+
+                    <!-- Applied Status Card -->
+                    <div class="stat-card">
+                        <div class="stat-label">Applied</div>
+                        <div class="stat-value" style="color: var(--accent-blue);">{{ jobs|selectattr('status', 'equalto', 'Applied')|list|length }}</div>
+                    </div>
+
+                    <!-- Interview Status Card -->
+                    <div class="stat-card">
+                        <div class="stat-label">Interviews</div>
+                        <div class="stat-value" style="color: var(--warning);">{{ jobs|selectattr('status', 'equalto', 'Interview')|list|length }}</div>
+                    </div>
+
+                    <!-- Rejected Status Card -->
+                    <div class="stat-card">
+                        <div class="stat-label">Rejected</div>
+                        <div class="stat-value" style="color: var(--danger);">{{ jobs|selectattr('status', 'equalto', 'Rejected')|list|length }}</div>
+                    </div>
+                </div>
+
+                <!-- Filter & Sort Controls -->
+                <div class="filter-controls">
+                    <div class="filter-group">
+                        <label for="filter-status">Filter by Status:</label>
+                        <select id="filter-status">
+                            <option value="">All Statuses</option>
+                            <option value="Applied">Applied</option>
+                            <option value="Interview">Interview</option>
+                            <option value="Rejected">Rejected</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="filter-ats">Filter by ATS Score:</label>
+                        <select id="filter-ats">
+                            <option value="">All Scores</option>
+                            <option value="80+">80+ (Excellent)</option>
+                            <option value="60-79">60-79 (Good)</option>
+                            <option value="below60">Below 60 (Needs Work)</option>
+                            <option value="unanalyzed">Not Analyzed</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="sort-by">Sort by:</label>
+                        <select id="sort-by">
+                            <option value="date-desc">Date Added (Newest)</option>
+                            <option value="date-asc">Date Added (Oldest)</option>
+                            <option value="ats-desc">ATS Score (Highest)</option>
+                            <option value="ats-asc">ATS Score (Lowest)</option>
+                            <option value="company">Company (A-Z)</option>
+                        </select>
+                    </div>
+
+                    <button id="reset-filters" class="btn btn-small" style="padding: var(--spacing-xs) var(--spacing-sm); font-size: var(--font-size-sm);">
+                        Reset Filters
+                    </button>
+                </div>
+            {% endif %}
+
+            <!-- Applications Table -->
+            {% if jobs %}
+                <div class="table-card">
+                    <h2 class="section-title">Your Applications</h2>
+                    <div style="overflow-x: auto;">
+                        <table id="jobs-table">
+                            <thead>
+                                <tr>
+                                    <th>Company</th>
+                                    <th>Position</th>
+                                    <th>Status</th>
+                                    <th>ATS Score</th>
+                                    <th>Date Applied</th>
+                                    <th>Interview Date</th>
+                                    <th>Notes</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="jobs-tbody">
+                                {% for job in jobs %}
+                                    <tr class="job-row" data-status="{{ job['status'] }}" data-ats="{{ job['ats_score'] }}">
+                                        <!-- Company -->
+                                        <td style="font-weight: 600;">{{ job['company'] }}</td>
+                                        
+                                        <!-- Position -->
+                                        <td>{{ job['role'] }}</td>
+                                        
+                                        <!-- Status Badge -->
+                                        <td>
+                                            <span class="badge {% if job['status'] == 'Applied' %}badge-applied{% elif job['status'] == 'Interview' %}badge-interview{% else %}badge-rejected{% endif %}">
+                                                {{ job['status'] }}
+                                            </span>
+                                        </td>
+                                        
+                                        <!-- ATS Score -->
+                                        <td style="text-align: center;">
+                                            {% if job['ats_score'] != None %}
+                                                <div class="ats-score-badge {% if job['ats_score'] >= 80 %}excellent{% elif job['ats_score'] >= 60 %}good{% else %}poor{% endif %}">
+                                                    {{ job['ats_score'] }}%
+                                                </div>
+                                            {% else %}
+                                                <span class="badge" style="background-color: var(--medium-grey); color: var(--dark-grey);">Not Analyzed</span>
+                                            {% endif %}
+                                        </td>
+                                        
+                                        <!-- Date Applied -->
+                                        <td style="font-size: var(--font-size-sm); color: var(--dark-grey);">
+                                            {{ job['date_applied'] if job['date_applied'] else '—' }}
+                                        </td>
+
+                                        <!-- Interview Date -->
+                                        <td style="font-size: var(--font-size-sm); color: var(--dark-grey);">
+                                            {% if job['interview_date'] %}
+                                                <span class="interview-badge">📅 {{ job['interview_date'] }}</span>
+                                            {% else %}
+                                                <span style="color: var(--medium-grey);">—</span>
+                                            {% endif %}
+                                        </td>
+
+                                        <!-- Notes -->
+                                        <td style="font-size: var(--font-size-sm); color: var(--dark-grey); max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                            {{ job['notes'] if job['notes'] else '—' }}
+                                        </td>
+                                        
+                                        <!-- Actions -->
+                                        <td style="text-align: center;">
+                                            <form method="GET" action="/edit-job" style="display: inline;">
+                                                <input type="hidden" name="job_id" value="{{ job['id'] }}">
+                                                <button type="submit" class="btn btn-small" style="padding: var(--spacing-xs) var(--spacing-sm); font-size: var(--font-size-sm);">
+                                                    Edit
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ATS Score Guide -->
+                <div class="info-section">
+                    <h2 class="section-title">Understanding ATS Scores</h2>
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <div class="score-indicator excellent">80+</div>
+                            <h3>Excellent Match</h3>
+                            <p>Your resume covers most key requirements. You are a strong candidate for this role.</p>
+                        </div>
+                        <div class="info-card">
+                            <div class="score-indicator good">60-79</div>
+                            <h3>Good Match</h3>
+                            <p>Your resume covers many requirements, but adding keywords may improve your chances.</p>
+                        </div>
+                        <div class="info-card">
+                            <div class="score-indicator poor">Below 60</div>
+                            <h3>Needs Improvement</h3>
+                            <p>Your resume is missing several key requirements. Consider updating it before applying.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons" style="display: flex; gap: var(--spacing-md); flex-wrap: wrap; margin-top: var(--spacing-xl);">
+                    <a href="/add-job" class="btn btn-action btn-action-primary">Add New Application</a>
+                    <a href="/upload-resume" class="btn btn-action btn-action-secondary">Check ATS Score</a>
+                    <a href="/" class="btn btn-action btn-action-tertiary">Back to Home</a>
+                </div>
+
+            {% else %}
+                <!-- Empty State -->
+                <div class="empty-state">
+                    <h2 style="margin-top: 0;">No Applications Yet</h2>
+                    <p>Start tracking your job applications by adding your first job posting.</p>
+                    <a href="/add-job" class="btn btn-action btn-action-primary" style="margin-top: var(--spacing-lg);">Add Your First Application</a>
+                </div>
+
+                <!-- Getting Started Guide -->
+                <section class="info-section">
+                    <h2 class="section-title">Getting Started</h2>
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <div class="info-step">1</div>
+                            <h3>Add Job Applications</h3>
+                            <p>Record the company name, job title, and paste the job description.</p>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-step">2</div>
+                            <h3>Upload Your Resume</h3>
+                            <p>Use the Resume Checker to upload your PDF resume for analysis.</p>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-step">3</div>
+                            <h3>Get ATS Scores</h3>
+                            <p>See how well your resume matches each job description.</p>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-step">4</div>
+                            <h3>Optimize Your Resume</h3>
+                            <p>Add missing keywords to improve your ATS compatibility.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Navigation -->
+                <div class="action-buttons" style="display: flex; gap: var(--spacing-md); flex-wrap: wrap; margin-top: var(--spacing-xl);">
+                    <a href="/" class="btn btn-action btn-action-tertiary">Back to Home</a>
+                    <a href="/add-job" class="btn btn-action btn-action-primary">Add Your First Application</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Filtering and Sorting Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterStatus = document.getElementById('filter-status');
+            const filterAts = document.getElementById('filter-ats');
+            const sortBy = document.getElementById('sort-by');
+            const resetBtn = document.getElementById('reset-filters');
+            const jobsTable = document.getElementById('jobs-table');
+            const jobsBody = document.getElementById('jobs-tbody');
+
+            // Filter and sort function
+            function applyFiltersAndSort() {
+                const rows = Array.from(jobsBody.querySelectorAll('tr'));
+                
+                // Apply filters
+                const filteredRows = rows.filter(row => {
+                    const status = row.getAttribute('data-status');
+                    const ats = row.getAttribute('data-ats');
+                    
+                    // Status filter
+                    if (filterStatus.value && status !== filterStatus.value) {
+                        return false;
+                    }
+                    
+                    // ATS filter
+                    if (filterAts.value) {
+                        const atsNum = ats === 'None' ? null : parseInt(ats);
+                        if (filterAts.value === 'unanalyzed' && ats !== 'None') {
+                            return false;
+                        }
+                        if (filterAts.value === '80+' && (atsNum === null || atsNum < 80)) {
+                            return false;
+                        }
+                        if (filterAts.value === '60-79' && (atsNum === null || atsNum < 60 || atsNum >= 80)) {
+                            return false;
+                        }
+                        if (filterAts.value === 'below60' && (atsNum === null || atsNum >= 60)) {
+                            return false;
+                        }
+                    }
+                    
+                    return true;
+                });
+                
+                // Apply sorting
+                filteredRows.sort((a, b) => {
+                    const sortValue = sortBy.value;
+                    
+                    if (sortValue === 'company') {
+                        const companyA = a.querySelector('td:nth-child(1)').textContent.toLowerCase();
+                        const companyB = b.querySelector('td:nth-child(1)').textContent.toLowerCase();
+                        return companyA.localeCompare(companyB);
+                    } else if (sortValue === 'ats-desc') {
+                        const atsA = a.getAttribute('data-ats') === 'None' ? -1 : parseInt(a.getAttribute('data-ats'));
+                        const atsB = b.getAttribute('data-ats') === 'None' ? -1 : parseInt(b.getAttribute('data-ats'));
+                        return atsB - atsA;
+                    } else if (sortValue === 'ats-asc') {
+                        const atsA = a.getAttribute('data-ats') === 'None' ? 999 : parseInt(a.getAttribute('data-ats'));
+                        const atsB = b.getAttribute('data-ats') === 'None' ? 999 : parseInt(b.getAttribute('data-ats'));
+                        return atsA - atsB;
+                    } else if (sortValue === 'date-asc') {
+                        const dateA = new Date(a.querySelector('td:nth-child(5)').textContent || '0000-00-00');
+                        const dateB = new Date(b.querySelector('td:nth-child(5)').textContent || '0000-00-00');
+                        return dateA - dateB;
+                    } else {
+                        // date-desc (default)
+                        const dateA = new Date(a.querySelector('td:nth-child(5)').textContent || '0000-00-00');
+                        const dateB = new Date(b.querySelector('td:nth-child(5)').textContent || '0000-00-00');
+                        return dateB - dateA;
+                    }
+                });
+                
+                // Update table
+                jobsBody.innerHTML = '';
+                filteredRows.forEach(row => jobsBody.appendChild(row));
+                
+                // Show message if no results
+                if (filteredRows.length === 0) {
+                    jobsBody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 2rem; color: var(--dark-grey);">No applications match your filters</td></tr>';
+                }
+            }
+            
+            // Event listeners
+            filterStatus.addEventListener('change', applyFiltersAndSort);
+            filterAts.addEventListener('change', applyFiltersAndSort);
+            sortBy.addEventListener('change', applyFiltersAndSort);
+            
+            // Reset filters
+            if (resetBtn) {
+                resetBtn.addEventListener('click', function() {
+                    filterStatus.value = '';
+                    filterAts.value = '';
+                    sortBy.value = 'date-desc';
+                    applyFiltersAndSort();
+                });
+            }
+        });
+    </script>
+</body>
+</html>

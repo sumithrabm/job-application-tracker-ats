@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glassmorphism Component Reference - Job Tracker</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        /* Component showcase styles */
+        .component-section {
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .component-title {
+            font-size: var(--font-size-lg);
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-md);
+            border-bottom: 2px solid rgba(99, 102, 241, 0.2);
+        }
+        
+        .component-demo {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .component-code {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: var(--spacing-md);
+            overflow-x: auto;
+            margin-top: var(--spacing-md);
+        }
+        
+        .component-code code {
+            font-family: 'Courier New', monospace;
+            font-size: var(--font-size-sm);
+            color: #e5e7eb;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1 class="header-title">🎨 Glassmorphism Components</h1>
+        <nav class="header-nav">
+            <a href="/" class="btn">Back to App</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="content-wrapper">
+            <p class="text-muted" style="font-size: var(--font-size-lg); margin-bottom: var(--spacing-xl);">
+                Complete reference guide for all Glassmorphism UI components used in the Job Tracker application.
+            </p>
+
+            <!-- ===== CARDS ===== -->
+            <div class="component-section">
+                <h2 class="component-title">Glass Cards</h2>
+                <p class="text-muted">Basic glass card component with frosted glass effect</p>
+                
+                <div class="component-demo">
+                    <div class="grid">
+                        <div class="card">
+                            <h3>Card One</h3>
+                            <p>This is a glass card. Hover over me to see the lift effect.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Card Two</h3>
+                            <p>Multiple cards can be arranged in a grid layout.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Card Three</h3>
+                            <p>Cards are responsive and adapt to screen size.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="component-code">
+                    <code>&lt;div class="card"&gt;
+    &lt;h3&gt;Card Title&lt;/h3&gt;
+    &lt;p&gt;Card content goes here&lt;/p&gt;
+&lt;/div&gt;</code>
+                </div>
+            </div>
+
+            <!-- ===== STAT CARDS ===== -->
+            <div class="component-section">
+                <h2 class="component-title">Stat Cards (Dashboard)</h2>
+                <p class="text-muted">Larger card variant for displaying statistics with gradient values</p>
+                
+                <div class="component-demo">
+                    <div class="grid">
+                        <div class="stat-card">
+                            <div class="stat-label">Total Applications</div>
+                            <div class="stat-value">48</div>
+                            <p style="font-size: var(--font-size-sm); margin-top: var(--spacing-sm); color: #6b7280;">
+                                All time applications
+                            </p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Applied</div>
+                            <div class="stat-value" style="background: linear-gradient(135deg, var(--warning), #f97316); -webkit-text-fill-color: transparent; -webkit-background-clip: text; background-clip: text;">25</div>
+                            <p style="font-size: var(--font-size-sm); margin-top: var(--spacing-sm); color: #b45309;">
+                                Awaiting response
+                            </p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Interview</div>
+                            <div class="stat-value" style="background: linear-gradient(135deg, var(--info), #06b6d4); -webkit-text-fill-color: transparent; -webkit-background-clip: text; background-clip: text;">12</div>
+                            <p style="font-size: var(--font-size-sm); margin-top: var(--spacing-sm); color: #0c4a6e;">
+                                Interview scheduled
+                            </p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Rejected</div>
+                            <div class="stat-value" style="background: linear-gradient(135deg, var(--danger), #f87171); -webkit-text-fill-color: transparent; -webkit-background-clip: text; background-clip: text;">11</div>
+                            <p style="font-size: var(--font-size-sm); margin-top: var(--spacing-sm); color: #7f1d1d;">
+                                Not selected
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="component-code">
+                    <code>&lt;div class="stat-card"&gt;
+    &lt;div class="stat-label"&gt;Label&lt;/div&gt;
+    &lt;div class="stat-value"&gt;42&lt;/div&gt;
+    &lt;p&gt;Subtitle&lt;/p&gt;
+&lt;/div&gt;</code>
+                </div>
+            </div>
+
+            <!-- ===== BUTTONS ===== -->
+            <div class="component-section">
+                <h2 class="component-title">Buttons</h2>
+                <p class="text-muted">Button variants with gradient backgrounds and colored shadows</p>
+                
+                <div class="component-demo">
+                    <div style="display: flex; gap: var(--spacing-md); flex-wrap: wrap;">
+                        <button class="btn">Primary Button</button>
+                        <button class="btn btn-secondary">Secondary Button</button>
+                        <button class="btn btn-success">Success Button</button>
+                        <button class="btn btn-danger">Danger Button</button>
+                    </div>
+                </div>
+                
+                <div class="component-code">
+                    <code>&lt;button class="btn"&gt;Primary&lt;/button&gt;
+&lt;button class="btn btn-secondary"&gt;Secondary&lt;/button&gt;
+&lt;button class="btn btn-success"&gt;Success&lt;/button&gt;
+&lt;button class="btn btn-danger"&gt;Danger&lt;/button&gt;</code>
+                </div>
+            </div>
+
+            <!-- ===== FORMS ===== -->
+            <div class="component-section">
+                <h2 class="component-title">Form Elements</h2>
+                <p class="text-muted">Glass-style form inputs with focus states</p>
+                
+                <div class="component-demo">
+                    <form style="max-width: 500px;">
+                        <div class="form-group">
+                            <label for="example-text">Text Input</label>
+                            <input type="text" id="example-text" placeholder="Enter text..." value="Glass input field">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="example-email">Email Input</label>
+                            <input type="email" id="example-email" placeholder="your@email.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="example-select">Dropdown Select</label>
+                            <select id="example-select">
+                                <option>Option 1</option>
+                                <option>Option 2</option>
+                                <option>Option 3</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="example-textarea">Textarea</label>
+                            <textarea id="example-textarea" placeholder="Multi-line text..."></textarea>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="component-code">
+                    <code>&lt;div class="form-group"&gt;
+    &lt;label for="input"&gt;Label&lt;/label&gt;
+    &lt;input type="text" id="input" placeholder="..."&gt;
+&lt;/div&gt;</code>
+                </div>
+            </div>
+
+            <!-- ===== BADGES ===== -->
+            <div class="component-section">
+                <h2 class="component-title">Status Badges</h2>
+                <p class="text-muted">Glass badges for status indicators</p>
+                
+                <div class="component-demo">
+                    <div style="display: flex; gap: var(--spacing-md); flex-wrap: wrap; align-items: center;">
+                        <span class="badge applied">✓ Applied</span>
+                        <span class="badge interview">🎯 Interview</span>
+                        <span class="badge rejected">✗ Rejected</span>
+                        <span class="badge" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.3); color: #065f46;">✓ Matched Skill</span>
+                        <span class="badge" style="background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.3); color: #7f1d1d;">+ Missing Skill</span>
+                    </div>
+                </div>
+                
+                <div class="component-code">
+                    <code>&lt;span class="badge applied"&gt;✓ Applied&lt;/span&gt;
+&lt;span class="badge interview"&gt;🎯 Interview&lt;/span&gt;
+&lt;span class="badge rejected"&gt;✗ Rejected&lt;/span&gt;</code>
+                </div>
+            </div>
+
+            <!-- ===== ATS SCORE ===== -->
+            <div class="component-section">
+                <h2 class="component-title">ATS Score Indicator</h2>
+                <p class="text-muted">Circular glass badge for ATS score display</p>
+                
+                <div class="component-demo flex-center" style="padding: var(--spacing-xl);">
+                    <div class="ats-score">
+                        <div class="ats-score-value">85%</div>
+                        <div class="ats-score-label">ATS Score</div>
+                    </div>
+                </div>
+                
+                <div class="component-code">
+                    <code>&lt;div class="ats-score"&gt;
+    &lt;div class="ats-score-value"&gt;85%&lt;/div&gt;
+    &lt;div class="ats-score-label"&gt;ATS Score&lt;/div&gt;
+&lt;/div&gt;</code>
+                </div>
+            </div>
+
+            <!-- ===== TABLES ===== -->
+            <div class="component-section">
+                <h2 class="component-title">Data Tables</h2>
+                <p class="text-muted">Glass-style table with hover effects</p>
+                
+                <div class="component-demo">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Company</th>
+                                <th>Position</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Google</strong></td>
+                                <td>Software Engineer</td>
+                                <td><span class="badge interview">🎯 Interview</span></td>
+                                <td>2026-01-03</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Microsoft</strong></td>
+                                <td>Product Manager</td>
+                                <td><span class="badge applied">✓ Applied</span></td>
+                                <td>2025-12-28</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Amazon</strong></td>
+                                <td>Data Scientist</td>
+                                <td><span class="badge rejected">✗ Rejected</span></td>
+                                <td>2025-12-15</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="component-code">
+                    <code>&lt;table&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;&lt;th&gt;Header&lt;/th&gt;&lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;&lt;td&gt;Data&lt;/td&gt;&lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;</code>
+                </div>
+            </div>
+
+            <!-- ===== LAYOUT UTILITIES ===== -->
+            <div class="component-section">
+                <h2 class="component-title">Layout Utilities</h2>
+                <p class="text-muted">Helper classes for spacing and alignment</p>
+                
+                <div class="component-demo">
+                    <div style="margin-bottom: var(--spacing-lg);">
+                        <h4 style="margin-bottom: var(--spacing-sm);">Grid Layout</h4>
+                        <div class="grid" style="min-height: 150px;">
+                            <div style="background: rgba(99, 102, 241, 0.2); padding: var(--spacing-md); border-radius: 8px; display: flex; align-items: center; justify-content: center;">Column 1</div>
+                            <div style="background: rgba(139, 92, 246, 0.2); padding: var(--spacing-md); border-radius: 8px; display: flex; align-items: center; justify-content: center;">Column 2</div>
+                            <div style="background: rgba(16, 185, 129, 0.2); padding: var(--spacing-md); border-radius: 8px; display: flex; align-items: center; justify-content: center;">Column 3</div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 style="margin-bottom: var(--spacing-sm);">Flexbox Classes</h4>
+                        <div style="display: flex; gap: var(--spacing-md);">
+                            <div style="flex: 1; background: rgba(99, 102, 241, 0.2); padding: var(--spacing-md); border-radius: 8px;">Flex Item</div>
+                            <div style="flex: 1; background: rgba(139, 92, 246, 0.2); padding: var(--spacing-md); border-radius: 8px;">Flex Item</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="component-code">
+                    <code>/* Grid with auto-fitting columns */
+&lt;div class="grid"&gt;...&lt;/div&gt;
+
+/* Flexbox utilities */
+&lt;div class="flex flex-between"&gt;...&lt;/div&gt;
+&lt;div class="flex flex-center"&gt;...&lt;/div&gt;
+
+/* Spacing utilities */
+&lt;div class="mt-lg mb-lg gap-md"&gt;...&lt;/div&gt;</code>
+                </div>
+            </div>
+
+            <!-- ===== COLOR PALETTE ===== -->
+            <div class="component-section">
+                <h2 class="component-title">Color Palette</h2>
+                <p class="text-muted">CSS variables for consistent color theming</p>
+                
+                <div class="component-demo">
+                    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+                        <div style="text-align: center;">
+                            <div style="width: 100%; height: 80px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); border-radius: 8px; margin-bottom: var(--spacing-sm);"></div>
+                            <small class="text-muted">--primary<br>#6366f1</small>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="width: 100%; height: 80px; background: linear-gradient(135deg, var(--secondary), #a78bfa); border-radius: 8px; margin-bottom: var(--spacing-sm);"></div>
+                            <small class="text-muted">--secondary<br>#8b5cf6</small>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="width: 100%; height: 80px; background: linear-gradient(135deg, var(--success), #34d399); border-radius: 8px; margin-bottom: var(--spacing-sm);"></div>
+                            <small class="text-muted">--success<br>#10b981</small>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="width: 100%; height: 80px; background: linear-gradient(135deg, var(--warning), #f97316); border-radius: 8px; margin-bottom: var(--spacing-sm);"></div>
+                            <small class="text-muted">--warning<br>#f59e0b</small>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="width: 100%; height: 80px; background: linear-gradient(135deg, var(--danger), #f87171); border-radius: 8px; margin-bottom: var(--spacing-sm);"></div>
+                            <small class="text-muted">--danger<br>#ef4444</small>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="width: 100%; height: 80px; background: linear-gradient(135deg, var(--info), #06b6d4); border-radius: 8px; margin-bottom: var(--spacing-sm);"></div>
+                            <small class="text-muted">--info<br>#0ea5e9</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="component-code">
+                    <code>/* Define colors in :root */
+:root {
+    --primary: #6366f1;
+    --secondary: #8b5cf6;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --info: #0ea5e9;
+}
+
+/* Use in CSS */
+button { background: var(--primary); }
+.success { color: var(--success); }</code>
+                </div>
+            </div>
+
+            <!-- ===== TIPS ===== -->
+            <div class="component-section">
+                <div class="card" style="background: rgba(34, 197, 94, 0.15); border-color: rgba(34, 197, 94, 0.3);">
+                    <h3>💡 Pro Tips</h3>
+                    <ul style="margin: 0; padding-left: 20px;">
+                        <li><strong>Consistency:</strong> Always use CSS variables from `:root` for colors</li>
+                        <li><strong>Spacing:</strong> Use spacing utilities (mt-sm, mb-lg, etc.) for consistent spacing</li>
+                        <li><strong>Responsive:</strong> Grid automatically reflows on mobile devices</li>
+                        <li><strong>Accessibility:</strong> All form inputs have proper labels and focus states</li>
+                        <li><strong>Performance:</strong> No JavaScript required - pure CSS animations</li>
+                        <li><strong>Customization:</strong> Modify CSS variables to change the entire theme</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ===== BACK BUTTON ===== -->
+            <div style="margin-top: var(--spacing-xl); text-align: center;">
+                <a href="/" class="btn btn-secondary">Back to Job Tracker</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
