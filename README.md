@@ -6,7 +6,19 @@ This project helps users track job applications, analyze resumes against job des
 
 ---
 
-## 🚀 Features
+## � Documentation
+
+**For detailed documentation, guides, and implementation details, see the [/docs](/docs) folder:**
+
+- 🚀 **Getting Started:** [START_HERE.md](/docs/START_HERE.md)
+- 📖 **Documentation Index:** [DOCUMENTATION_GUIDE.md](/docs/DOCUMENTATION_GUIDE.md)
+- 💼 **Recruiter Talking Points:** [RECRUITER_TALKING_POINTS.md](/docs/RECRUITER_TALKING_POINTS.md)
+- ⚙️ **Implementation Details:** [IMPLEMENTATION_DETAILS.md](/docs/IMPLEMENTATION_DETAILS.md)
+- 🎨 **Design System:** [DESIGN_SYSTEM_OVERVIEW.md](/docs/DESIGN_SYSTEM_OVERVIEW.md)
+
+---
+
+## �🚀 Features
 
 - Add and manage job applications (company, role, status)
 - Job-specific ATS resume analysis
